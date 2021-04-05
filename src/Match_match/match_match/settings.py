@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
+    'match_match'
 ]
 
 MIDDLEWARE = [
@@ -56,9 +57,7 @@ MIDDLEWARE = [
 
 
 GRAPHENE = {
-    # "SCHEMA": "django_root.schema.schema"
-    "SCHEMA": r"C:\Users\Piotr\Desktop\match-match-repostiories\match-match\src\Match_match\graphql_api\places\schema.py"
-
+    'SCHEMA': 'graphql_api.api.schema'
 }
 
 ROOT_URLCONF = 'match_match.urls'
