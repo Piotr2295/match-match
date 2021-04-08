@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.http import HttpResponse
-from django.urls import path
+from django.urls import path, include
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path('', lambda request: HttpResponse('Home')),
     path('admin/', admin.site.urls),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
+    path('cities/', include('cities.urls'))
 ]

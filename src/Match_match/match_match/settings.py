@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
+    'mapwidgets',
+    'cities'
     'match_match'
 ]
 
@@ -55,6 +57,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+GDAL_LIBRARY_PATH = r'C:\Users\Piotr\Desktop\match-match-repostiories\match-match-venv\Lib\site-packages\django' \
+                    r'\contrib\gis\gdal'
 
 GRAPHENE = {
     'SCHEMA': 'graphql_api.api.schema'
@@ -65,7 +69,9 @@ ROOT_URLCONF = 'match_match.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates/'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,10 +90,21 @@ WSGI_APPLICATION = 'match_match.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'mapwidget_db',
+        'USER': 'mapwidgetdbu',
+        'PASSWORD': 'mapwidgetdbu',
+        'HOST': 'mapwidget_postgres',
+        'PORT': '5432',
     }
 }
 
@@ -129,3 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+GOOGLE_MAP_API_KEY = os.environ['GOOGLE_MAP_API_KEY']
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
+        ("markerFitZoom", 11),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}})
+    ),
+    "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
+}
